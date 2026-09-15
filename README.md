@@ -10,6 +10,7 @@ A small CLI that reads JSON log lines (from stdin or a file) and prints them in 
 - Filter by level (`-level`) or substring (`-grep`)
 - Streams output line by line, so it works with `tail -f` / piped live processes
 - `-no-color` to disable ANSI colors
+- `-output` to also save the output to a file, in the same format shown on screen
 
 ## Requirements
 
@@ -63,6 +64,9 @@ json-log-parser -grep "mirror-detection" app.log
 
 # disable colors (e.g. when redirecting to a file)
 json-log-parser -no-color -table app.log > out.txt
+
+# save output to a file (same format as printed to screen), while still printing to stdout
+json-log-parser -table -output out.txt app.log
 ```
 
 ## Flags
@@ -76,6 +80,7 @@ json-log-parser -no-color -table app.log > out.txt
 | `-level`     | Only show entries matching this level (case-insensitive)   |
 | `-grep`      | Only show entries whose raw line contains this substring    |
 | `-no-color`  | Disable ANSI colors                                         |
+| `-output`    | Also write output to this file, in the same format printed to screen |
 
 Only one of `-table`, `-oneline`, `-pprint`, `-logfmt` may be used at a time.
 

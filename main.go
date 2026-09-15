@@ -102,6 +102,7 @@ func main() {
 	levelFilter := flag.String("level", "", "only show entries matching this level (case-insensitive)")
 	grep := flag.String("grep", "", "only show entries whose raw line contains this substring")
 	noColor := flag.Bool("no-color", false, "disable ANSI colors")
+	output := flag.String("output", "", "also write output to this file (same format as printed to screen)")
 	flag.Parse()
 
 	modes := 0
@@ -132,7 +133,18 @@ func main() {
 	scanner := bufio.NewScanner(r)
 	scanner.Buffer(make([]byte, 0, 64*1024), 10*1024*1024)
 
-	w := bufio.NewWriter(os.Stdout)
+	var out io.Writer = os.Stdout
+	if *output != "" {
+		f, err := os.Create(*output)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "error: %v\n", err)
+			os.Exit(1)
+		}
+		defer f.Close()
+		out = io.MultiWriter(os.Stdout, f)
+	}
+
+	w := bufio.NewWriter(out)
 	defer w.Flush()
 
 	if *table {
