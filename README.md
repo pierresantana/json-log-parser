@@ -18,25 +18,41 @@ A small CLI that reads JSON log lines (from stdin or a file) and prints them in 
 
 ## Install
 
-Clone the repo and build/install with the included Makefile:
+### go install (recommended)
 
 ```bash
-git clone <repo-url>
+go install github.com/pierresantana/json-log-parser@latest
+```
+
+Pin a specific version instead:
+
+```bash
+go install github.com/pierresantana/json-log-parser@v0.1.0
+```
+
+Make sure `$GOBIN` (or `$GOPATH/bin`, usually `~/go/bin`) is on your `PATH`:
+
+```bash
+export PATH="$PATH:$(go env GOPATH)/bin"
+```
+
+### From source
+
+```bash
+git clone https://github.com/pierresantana/json-log-parser.git
 cd json-log-parser
 make build      # builds ./bin/json-log-parser
 # or
 make install    # go install . — puts the binary in $GOBIN (or $GOPATH/bin)
 ```
 
-Alternatively, without the Makefile:
+Without the Makefile:
 
 ```bash
 go build -o bin/json-log-parser .
 # or
 go install .
 ```
-
-Make sure `$GOBIN` (or `$GOPATH/bin`) is on your `PATH` to run `json-log-parser` from anywhere after `go install`.
 
 ## Usage
 
